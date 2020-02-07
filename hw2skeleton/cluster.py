@@ -196,7 +196,7 @@ def cluster_hierarchically(active_sites):
         
     #instead turns the previous weird list of tuples of arrays into a list of list of lists (couldn't figure out how to mkae it just a list of lists)
     NN_clusters_list = [] 
-    for cluster in NN_clusters:
+    for cluster in clusterings:
         clustering = [l.tolist() for l in cluster]
         NN_clusters_list.append(clustering)
     
