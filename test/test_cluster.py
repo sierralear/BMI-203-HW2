@@ -15,7 +15,7 @@ def test_similarity():
     #check that the distance between A and A is 0
     assert cluster.compute_similarity(activesite_a, activesite_a) == 0.0
     #check that the distance is always positive
-    assert cluster.compute_similarity(activesite_a, activesite_a) => 0.0
+    assert cluster.compute_similarity(activesite_a, activesite_a) >= 0.0
 
 
 def test_partition_clustering():
