@@ -6,6 +6,9 @@ from itertools import product
 my_aa = ['ALA', 'ARG', 'ASN', 'ASP', 'CYS', 'GLN', 'GLU', 'GLY', 'HIS', 'ILE', 'LEU', 'LYS',
          'MET', 'PHE', 'PRO', 'SER', 'THR', 'TRP', 'TYR', 'VAL']
 
+path = os.path.join("data", "%i.pdb"%id)
+active_site = io.read_active_sites(path);
+
 def compute_similarity(site_a, site_b):
     """
     Compute the similarity between two given ActiveSite instances.
@@ -47,6 +50,36 @@ def compute_similarity(site_a, site_b):
     
     return similarity
 
+def compute_similarity_partitioning(site_a, centroid):
+    """
+    Compute the similarity between two given ActiveSite instances.
+
+    Input: one ActiveSite instance, one "centroid" consisting of a 20-element vector with numnbers between 0 and 1
+    Output: the similarity between them (a floating point number)
+    """
+
+    similarity = 0.0
+    
+    #creating list comprehension of all AAs for site a residues
+    list_res_a = [r.type for r in site_a.residues]
+    
+    #create two histogram count lists for site a and b from the list comprehensions
+    count_a = Counter(list_res_a)
+    
+    #initialize two 20-element AA dictionaries: one for site A, one for site B
+    a_dict = {aa:0 for aa in my_aa}
+    
+    #convert normalized histogram count into the 20-D vector AA dictionary
+    #a site
+    for aa, count in count_a.items():
+        a_dict[aa] = count
+    a_vector = np.array(list(a_dict.values()))
+    a_vector = a_vector/np.sum(a_vector) #to return percentage of amino acid identity
+        
+    #calculate Euclidian distance between the two sites' 20-D vectors
+    similarity = np.sqrt(np.sum((a_vector - centroid)**2))
+    
+    return similarity, a_vector
 
 def cluster_by_partitioning(active_sites):
     """
