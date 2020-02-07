@@ -2,6 +2,7 @@ from .utils import Atom, Residue, ActiveSite
 import numpy as np
 from collections import Counter
 from itertools import product
+from hw2skeleton import io
 import os
 
 my_aa = ['ALA', 'ARG', 'ASN', 'ASP', 'CYS', 'GLN', 'GLU', 'GLY', 'HIS', 'ILE', 'LEU', 'LYS',
