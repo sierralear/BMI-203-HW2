@@ -2,11 +2,12 @@ from .utils import Atom, Residue, ActiveSite
 import numpy as np
 from collections import Counter
 from itertools import product
+import os
 
 my_aa = ['ALA', 'ARG', 'ASN', 'ASP', 'CYS', 'GLN', 'GLU', 'GLY', 'HIS', 'ILE', 'LEU', 'LYS',
          'MET', 'PHE', 'PRO', 'SER', 'THR', 'TRP', 'TYR', 'VAL']
 
-path = os.path.join("data", "%i.pdb"%id)
+path = os.path.join("data")
 active_site = io.read_active_sites(path);
 
 def compute_similarity(site_a, site_b):
