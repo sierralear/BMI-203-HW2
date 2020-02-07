@@ -1,7 +1,7 @@
 # HW2 Skeleton
 
 [![Build
-Status](https://travis-ci.org/sierralear/BMI_203_HW2.svg?branch=master)](https://travis-ci.org/sierralear/BMI_203_HW2)
+Status](https://travis-ci.org/sierralear/BMI-203-HW2.svg?branch=master)](https://travis-ci.org/sierralear/BMI-203-HW2)
 
 Skeleton for clustering project.
 
