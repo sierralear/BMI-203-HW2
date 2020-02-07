@@ -1,6 +1,10 @@
 from .utils import Atom, Residue, ActiveSite
 import numpy as np
 from collections import Counter
+from itertools import product
+
+my_aa = ['ALA', 'ARG', 'ASN', 'ASP', 'CYS', 'GLN', 'GLU', 'GLY', 'HIS', 'ILE', 'LEU', 'LYS',
+         'MET', 'PHE', 'PRO', 'SER', 'THR', 'TRP', 'TYR', 'VAL']
 
 def compute_similarity(site_a, site_b):
     """
@@ -101,6 +105,7 @@ def cluster_hierarchically(active_sites):
     Output: a list of clusterings
             (each clustering is a list of lists of Sequence objects)
     """
+    as_num = list(range(0,len(active_site)))
     group = np.array(as_num) #creating cluster labels
     dist_matrix = np.zeros((len(as_num), len(as_num))) # create upper triangular distance matrix recording similarities for each pair of active sites
     for row in as_num: #going through rows of distance matrix
