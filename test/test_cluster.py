@@ -14,6 +14,8 @@ def test_similarity():
     assert cluster.compute_similarity(activesite_a, activesite_b) == cluster.compute_similarity(activesite_b, activesite_a)
     #check that the distance between A and A is 0
     assert cluster.compute_similarity(activesite_a, activesite_a) == 0.0
+    #check that the distance is always positive
+    assert cluster.compute_similarity(activesite_a, activesite_a) => 0.0
 
 
 def test_partition_clustering():
@@ -25,8 +27,8 @@ def test_partition_clustering():
         filepath = os.path.join("data", "%i.pdb"%id)
         active_sites.append(io.read_active_site(filepath))
 
-    # update this assertion
-    assert cluster.cluster_by_partitioning(active_sites) == []
+    # clusters produce k number of final labels
+    assert len(cluster.cluster_by_partitioning(active_sites).unique()) == k
 
 def test_hierarchical_clustering():
     # tractable subset
@@ -37,5 +39,5 @@ def test_hierarchical_clustering():
         filepath = os.path.join("data", "%i.pdb"%id)
         active_sites.append(io.read_active_site(filepath))
 
-    # update this assertion
-    assert cluster.cluster_hierarchically(active_sites) == []
+    # clusters produce k number of final labels
+    assert len(cluster.cluster_hierarchically(active_sites).unique()) == k
