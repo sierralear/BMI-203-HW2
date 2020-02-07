@@ -99,35 +99,34 @@ def cluster_hierarchically(active_sites):
     Output: a list of clusterings
             (each clustering is a list of lists of Sequence objects)
     """
-
-   group = np.array(as_num) #creating cluster labels
-   dist_matrix = np.zeros((len(as_num), len(as_num))) # create upper triangular distance matrix recording similarities for each pair of active sites
-   for row in as_num: #going through rows of distance matrix
-       for col in range(row,len(as_num)): #going through columns of distance matrix
-           similarity = compute_similarity(active_site[row], active_site[col]) #calculate similarity
-           dist_matrix[row, col] = similarity #input the similarity into the proper location in matrix
+    group = np.array(as_num) #creating cluster labels
+    dist_matrix = np.zeros((len(as_num), len(as_num))) # create upper triangular distance matrix recording similarities for each pair of active sites
+    for row in as_num: #going through rows of distance matrix
+        for col in range(row,len(as_num)): #going through columns of distance matrix
+            similarity = compute_similarity(active_site[row], active_site[col]) #calculate similarity
+            dist_matrix[row, col] = similarity #input the similarity into the proper location in matrix
         
-   for row in as_num: #NaN-ing redundant values in matrix to make upper triangular matrix
-       for col in range(0,row+1):
-           dist_matrix[row, col] = np.NaN
+    for row in as_num: #NaN-ing redundant values in matrix to make upper triangular matrix
+        for col in range(0,row+1):
+            dist_matrix[row, col] = np.NaN
             
-   k = 3 #final number of clusters--set at 3 to better compare to the 3 clusters from Objective 2
-   while len(np.unique(group)) > k: #the algorithm will run until I've reached my desired number of clusters
-       min_similarity(dist_matrix, group) #calculating
+    k = 3 #final number of clusters--set at 3 to better compare to the 3 clusters from Objective 2
+    while len(np.unique(group)) > k: #the algorithm will run until I've reached my desired number of clusters
+        min_similarity(dist_matrix, group) #calculating
         
-   cluster_labels = np.unique(group) #returns a list of arrays of my clusters
-   clusterings = []
-   for cluster in cluster_labels:
-       clusterings.append(np.where(group == cluster))
+    cluster_labels = np.unique(group) #returns a list of arrays of my clusters
+    clusterings = []
+    for cluster in cluster_labels:
+        clusterings.append(np.where(group == cluster))
         ##Note: doing this somehow gave me a list returning tuples that then returns an array
         
         
     #instead turns the previous weird list of tuples of arrays into a list of list of lists (couldn't figure out how to mkae it just a list of lists)
-   NN_clusters_list = [] 
-   for cluster in NN_clusters:
-       clustering = [l.tolist() for l in cluster]
-       NN_clusters_list.append(clustering)
+    NN_clusters_list = [] 
+    for cluster in NN_clusters:
+        clustering = [l.tolist() for l in cluster]
+        NN_clusters_list.append(clustering)
     
 
 
-   return NN_clusters_list
+    return NN_clusters_list
