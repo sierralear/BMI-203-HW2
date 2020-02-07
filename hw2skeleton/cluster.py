@@ -124,7 +124,7 @@ def cluster_by_partitioning(active_sites):
         #recalculate centroid based on active site assigned to it
         clusterings = [] #initialize clusterings list
         for centroid in df_new["Centroids"].unique(): #looping through each centroid 
-            as_in_centroids = df_new.loc[cluster_new["Centroids"] == centroid].index #find all active site labelled for that cluster
+            as_in_centroids = df_new.loc[df_new["Centroids"] == centroid].index #find all active site labelled for that cluster
             clusterings.append(as_in_centroids.tolist()) #add that to my clustering list
             centroid_activesite_comps = [] #intialize list of compositionality for a given centroid
             for activesite in as_in_centroids: #lopping through each active site for a given centroid
@@ -132,6 +132,8 @@ def cluster_by_partitioning(active_sites):
             centroid_list[i] = np.mean(centroid_activesite_comps, axis = 0) #recalculating centroid as the row element-wise mean of the new amino acids
                 
     return clusterings
+
+as_num = list(range(0,len(active_site)))
 
 def min_similarity(distance_matrix, group_labels):
     '''
@@ -170,7 +172,6 @@ def cluster_hierarchically(active_sites):
     Output: a list of clusterings
             (each clustering is a list of lists of Sequence objects)
     """
-    as_num = list(range(0,len(active_site)))
     group = np.array(as_num) #creating cluster labels
     dist_matrix = np.zeros((len(as_num), len(as_num))) # create upper triangular distance matrix recording similarities for each pair of active sites
     for row in as_num: #going through rows of distance matrix
