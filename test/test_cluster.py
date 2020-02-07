@@ -12,6 +12,9 @@ def test_similarity():
     # update this assertion
     #check that the distance between A and B is the same as between B and A
     assert cluster.compute_similarity(activesite_a, activesite_b) == cluster.compute_similarity(activesite_b, activesite_a)
+    #check that the distance between A and A is 0
+    assert cluster.compute_similarity(activesite_a, activesite_a) == 0.0
+
 
 def test_partition_clustering():
     # tractable subset
