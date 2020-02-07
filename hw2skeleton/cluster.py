@@ -1,5 +1,6 @@
 from .utils import Atom, Residue, ActiveSite
 import numpy as np
+import pandas as pd
 from collections import Counter
 from itertools import product
 from hw2skeleton import io
@@ -131,6 +132,35 @@ def cluster_by_partitioning(active_sites):
             centroid_list[i] = np.mean(centroid_activesite_comps, axis = 0) #recalculating centroid as the row element-wise mean of the new amino acids
                 
     return clusterings
+
+def min_similarity(distance_matrix, group_labels):
+    '''
+    This function determines the the two active sites that are closest to each other and then changes it so those
+    points and their associated cluster are converted into one single cluster. It also flags that minimum distance
+    so it is never used again in future iterations.
+    
+    Input: distance_matrix -- a matrix returning all the distances from one active site to another active site
+            group_labels -- the current clusters/labels all active sites currently belong to
+    
+    
+    Output: row_i, col_i: the two active sites that are closest to each other
+            distance: the minimum distance between those two active sites
+    
+    '''
+    
+    flat_i = np.nanargmin(distance_matrix) #finds the "flattened index" of the minimum distance
+    row_i = int(flat_i/len(as_num)) #calculates what the row_index or one of the active sites from "flattened index"
+    col_i = flat_i - (row_i * len(as_num)) #calculates the col_index or the other active site from "flattened index"
+    distance = distance_matrix[row_i, col_i] #is the distance between those two active sites
+        
+    min_label = np.min([group_labels[row_i], group_labels[col_i]]) #calculates what the lower of the labels of those two active sites are
+    max_label = np.max([group_labels[row_i], group_labels[col_i]]) #calculates what the higher of the labels of those two active sites are
+    group_labels[np.where(group_labels == max_label)] = min_label #changes all labels of the maxmimum label to the minimum label
+                                                                    #basically: combines two clusters into one cluster label
+    
+    distance_matrix[row_i, col_i] = group_labels[row_i] + 1000 #flagging that distance as "used up"
+    
+    return row_i, col_i, distance
 
 def cluster_hierarchically(active_sites):
     """
