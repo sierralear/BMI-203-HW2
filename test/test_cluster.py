@@ -28,7 +28,7 @@ def test_partition_clustering():
         active_sites.append(io.read_active_site(filepath))
 
     # clusters produce k number of final labels
-    assert len(cluster.cluster_by_partitioning(active_sites)) == k
+    assert len(cluster.cluster_by_partitioning(active_sites)) == 3 #k = 3 in my code
 
 def test_hierarchical_clustering():
     # tractable subset
@@ -40,4 +40,4 @@ def test_hierarchical_clustering():
         active_sites.append(io.read_active_site(filepath))
 
     # clusters produce k number of final labels
-    assert len(cluster.cluster_hierarchically(active_sites)) == k
+    assert len(cluster.cluster_hierarchically(active_sites)) == 3 #k = 3 in my code
